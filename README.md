@@ -22,7 +22,27 @@ The index uses a custom analyzer for the `name` field, and queries use `match_ph
 
 ## Setup
 
-Make sure OpenSearch is installed and running on `localhost:9200`.
+### 1. Start OpenSearch
+
+The fastest way to get OpenSearch running locally is Docker ([install Docker](https://docs.docker.com/get-docker/) if you do not have it):
+
+```bash
+docker run -d --name opensearch \
+  -p 9200:9200 \
+  -e "discovery.type=single-node" \
+  -e "DISABLE_SECURITY_PLUGIN=true" \
+  opensearchproject/opensearch:latest
+```
+
+Verify it is up:
+
+```bash
+curl http://localhost:9200
+```
+
+The API expects OpenSearch on `localhost:9200` with security disabled, which is what the command above provides. For a non-Docker install, see the [OpenSearch downloads page](https://opensearch.org/downloads.html).
+
+### 2. Install the Python dependencies
 
 ```bash
 python3 -m venv venv
